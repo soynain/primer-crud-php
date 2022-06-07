@@ -9,7 +9,7 @@ if ($_POST) {
     if ($insertarProducto->ejecutarInsercion(
         $_POST['productName'],
         $_POST['description'],
-        $_POST['dateSelect'],
+        date_format(date_create($_POST['dateSelect']),'Y-m-d H:i:s'),
         $blobFotoProducto
     )) {
         header("Location:/crudmaestros/panelprincipal.php");
@@ -48,7 +48,7 @@ if ($_POST) {
                         <label for="description" class="form-label">Descripción del producto: </label>
                         <input name="description" type="text" class="form-control" id="description" placeholder="Introduce la descripción del producto: ">
                         <label for="dateSelect" class="form-label">Fecha de alta: </label>
-                        <input name="dateSelect" type="text" class="form-control" id="dateSelect" placeholder="Selecciona la fecha deseada: ">
+                        <input name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect" placeholder="Selecciona la fecha deseada: ">
                         <label for="formFile" class="form-label">Selecciona la imagen de tu producto: </label>
                         <input name="imagenProd" class="form-control" type="file" id="formFile">
                         <input type="submit" class="btn btn-primary mt-4" value="Registrar nuevo producto">
@@ -76,9 +76,9 @@ if ($_POST) {
                             <th scope="row"><?php echo $producto['id']?></th>
                             <td><?php echo $producto['nombre']?></td>
                             <td class="text-break w-25"><?php echo $producto['descripcion']?></td>
-                            <td><?php echo $producto['fechaAlta']?></td>
-                            <td class="w-25"><img src=<?php echo $producto['imagen'] ?>></td>
-                            <td><a href=""></a></td>
+                            <td><?php echo date_format(date_create($producto['fechaAlta']),'d/M/Y')?></td>
+                            <td class="w-25"><?php echo "<img style='width:auto; height:95px;' src='data:image/jpeg;base64," . base64_encode( $producto['imagen']) . "' />"; ?></td>
+                            <td><a class="btn btn-" href=""></a></td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>
