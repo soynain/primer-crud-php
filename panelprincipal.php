@@ -3,10 +3,10 @@ session_start();
 require_once "../CrudMaestros/Repository/RepositoryBdd.php";
 require_once "./Controller/AltaProducto.php"; //POST ALTA
 require_once "./Controller/BajaProducto.php"; //GET BAJA
-require_once "./auth/logout.php";//GET LOGOUT
+require_once "./auth/logout.php"; //GET LOGOUT
 
 $consultaProductos = new RepositoryBdd();
-/*se consultan los datos de las tablas*/ 
+/*se consultan los datos de las tablas*/
 $resultadosConsultaProductos = $consultaProductos->ejecutarConsulta();
 ?>
 
@@ -25,9 +25,9 @@ $resultadosConsultaProductos = $consultaProductos->ejecutarConsulta();
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" >Crud Productos</a>
+            <a class="navbar-brand text-white">Crud Productos</a>
             <a class="nav-item text-white" href="/crudmaestros/auth/logout.php?salir">Salir</a>
-            <p class="nav-item text-white"><?php echo "Bienvenido ".$_SESSION['usuario'] ?></p>
+            <p class="nav-item text-white"><?php echo "Bienvenido " . $_SESSION['usuario'] ?></p>
         </div>
     </nav>
     <div class="container-fluid d-flex justify-content-center mt-4 mb-4">
@@ -37,13 +37,13 @@ $resultadosConsultaProductos = $consultaProductos->ejecutarConsulta();
                 <form action="panelprincipal.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="productName" class="form-label">Nombre del producto: </label>
-                        <input name="productName" type="text" class="form-control" id="productName" placeholder="Introduce el nombre del producto">
+                        <input required name="productName" type="text" class="form-control" id="productName" placeholder="Introduce el nombre del producto">
                         <label for="description" class="form-label">Descripción del producto: </label>
-                        <textarea style="resize: none;" name="description" type="text" class="form-control" id="description" placeholder="Introduce la descripción del producto: "></textarea>
+                        <textarea required style="resize: none;" name="description" type="text" class="form-control" id="description" placeholder="Introduce la descripción del producto: "></textarea>
                         <label for="dateSelect" class="form-label">Fecha de alta: </label>
-                        <input name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect" placeholder="Selecciona la fecha deseada: ">
+                        <input required name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect" placeholder="Selecciona la fecha deseada: ">                     
                         <label for="formFile" class="form-label">Selecciona la imagen de tu producto: </label>
-                        <input name="imagenProd" class="form-control" type="file" id="formFile">
+                        <input required name="imagenProd" class="form-control" type="file" id="formFile">
                         <input type="submit" class="btn btn-primary mt-4" value="Registrar nuevo producto">
                     </div>
                 </form>
@@ -72,7 +72,8 @@ $resultadosConsultaProductos = $consultaProductos->ejecutarConsulta();
                             <td><?php echo date_format(date_create($producto['fechaAlta']), 'd/M/Y') ?></td>
                             <td class="w-25"><?php echo "<img onContextMenu='return false;' style='width:auto; height:95px;' src='data:image/jpeg;base64," . base64_encode($producto['imagen']) . "' />"; ?></td>
                             <td><a class="btn btn-success" href="/crudmaestros/modificarProducto.php?modificar=<?php echo $producto['id'] ?>">Modificar</a>
-                            <a href="/crudmaestros/panelprincipal.php?borrar=<?php echo $producto['id'] ?>" class="btn btn-danger">Eliminar</a></td>
+                                <a href="/crudmaestros/panelprincipal.php?borrar=<?php echo $producto['id'] ?>" class="btn btn-danger">Eliminar</a>
+                            </td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>

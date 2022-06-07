@@ -49,13 +49,13 @@ if ($_GET) {
                     <div class="mb-3">
                     <input type="hidden" name="id" value='<?php echo $arrayValoresConsulta[0]['id'] ?>'>
                         <label for="productName" class="form-label">Nombre del producto: </label>
-                        <input value='<?php echo $arrayValoresConsulta[0]['nombre'] ?>' name="productName" type="text" class="form-control" id="productName">
+                        <input required value='<?php echo $arrayValoresConsulta[0]['nombre'] ?>' name="productName" type="text" class="form-control" id="productName">
                         <label for="description" class="form-label">Descripción del producto: </label>
-                        <textarea style="resize: none;" name="description" type="text" class="form-control" id="description"><?php echo $arrayValoresConsulta[0]['descripcion'] ?></textarea>
+                        <textarea required style="resize: none;" name="description" type="text" class="form-control" id="description"><?php echo $arrayValoresConsulta[0]['descripcion'] ?></textarea>
                         <label for="dateSelect" class="form-label">Fecha de alta: </label>
-                        <input value='<?php echo date_format(date_create($arrayValoresConsulta[0]['fechaAlta']),'d/m/Y') ?>' name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect">
+                        <input required value='<?php echo date_format(date_create($arrayValoresConsulta[0]['fechaAlta']),'d/m/Y') ?>' name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect">
                         <label for="formFile" class="form-label">Selecciona la imagen de tu producto: </label>
-                        <input name="imagenProd" class="form-control" type="file" id="formFile">
+                        <input required name="imagenProd" class="form-control" type="file" id="formFile">
                         <input type="submit" class="btn btn-primary mt-4" value="Actualizar producto">
                     </div>
                 </form>
