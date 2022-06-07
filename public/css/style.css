@@ -1,0 +1,12 @@
+
+.login-cont{
+    width: 500px;
+    height: auto;
+    border: 1px solid black;
+    padding: 1.5rem;
+    border-radius: 7px;
+}
+
+.text-bg-danger{
+    display: none;
+}
