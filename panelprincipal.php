@@ -1,22 +1,13 @@
 <?php
-include "../CrudMaestros/Repository/RepositoryBdd.php";
+session_start();
+require_once "../CrudMaestros/Repository/RepositoryBdd.php";
+require_once "./Controller/AltaProducto.php"; //POST ALTA
+require_once "./Controller/BajaProducto.php"; //GET BAJA
+require_once "./auth/logout.php";//GET LOGOUT
+
 $consultaProductos = new RepositoryBdd();
+/*se consultan los datos de las tablas*/ 
 $resultadosConsultaProductos = $consultaProductos->ejecutarConsulta();
-if ($_POST) {
-    // $_FILES['archivo'];
-    $blobFotoProducto = file_get_contents($_FILES['imagenProd']['tmp_name']);
-    $insertarProducto = new RepositoryBdd();
-    if ($insertarProducto->ejecutarInsercion(
-        $_POST['productName'],
-        $_POST['description'],
-        date_format(date_create($_POST['dateSelect']),'Y-m-d H:i:s'),
-        $blobFotoProducto
-    )) {
-        header("Location:/crudmaestros/panelprincipal.php");
-    } else {
-        echo "<h1>NO SE INSERTO WE</h1>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +25,9 @@ if ($_POST) {
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Crud Productos</a>
+            <a class="navbar-brand text-white" >Crud Productos</a>
+            <a class="nav-item text-white" href="/crudmaestros/auth/logout.php?salir">Salir</a>
+            <p class="nav-item text-white"><?php echo "Bienvenido ".$_SESSION['usuario'] ?></p>
         </div>
     </nav>
     <div class="container-fluid d-flex justify-content-center mt-4 mb-4">
@@ -46,7 +39,7 @@ if ($_POST) {
                         <label for="productName" class="form-label">Nombre del producto: </label>
                         <input name="productName" type="text" class="form-control" id="productName" placeholder="Introduce el nombre del producto">
                         <label for="description" class="form-label">Descripción del producto: </label>
-                        <input name="description" type="text" class="form-control" id="description" placeholder="Introduce la descripción del producto: ">
+                        <textarea style="resize: none;" name="description" type="text" class="form-control" id="description" placeholder="Introduce la descripción del producto: "></textarea>
                         <label for="dateSelect" class="form-label">Fecha de alta: </label>
                         <input name="dateSelect" type="text" class="form-control" onfocus="(this.type='date')" id="dateSelect" placeholder="Selecciona la fecha deseada: ">
                         <label for="formFile" class="form-label">Selecciona la imagen de tu producto: </label>
@@ -73,12 +66,13 @@ if ($_POST) {
                 <?php if (!empty($resultadosConsultaProductos)) { ?>
                     <?php foreach ($resultadosConsultaProductos as $producto) { ?>
                         <tr>
-                            <th scope="row"><?php echo $producto['id']?></th>
-                            <td><?php echo $producto['nombre']?></td>
-                            <td class="text-break w-25"><?php echo $producto['descripcion']?></td>
-                            <td><?php echo date_format(date_create($producto['fechaAlta']),'d/M/Y')?></td>
-                            <td class="w-25"><?php echo "<img style='width:auto; height:95px;' src='data:image/jpeg;base64," . base64_encode( $producto['imagen']) . "' />"; ?></td>
-                            <td><a class="btn btn-" href=""></a></td>
+                            <th scope="row"><?php echo $producto['id'] ?></th>
+                            <td><?php echo $producto['nombre'] ?></td>
+                            <td class="text-break w-25"><?php echo $producto['descripcion'] ?></td>
+                            <td><?php echo date_format(date_create($producto['fechaAlta']), 'd/M/Y') ?></td>
+                            <td class="w-25"><?php echo "<img onContextMenu='return false;' style='width:auto; height:95px;' src='data:image/jpeg;base64," . base64_encode($producto['imagen']) . "' />"; ?></td>
+                            <td><a class="btn btn-success" href="/crudmaestros/modificarProducto.php?modificar=<?php echo $producto['id'] ?>">Modificar</a>
+                            <a href="/crudmaestros/panelprincipal.php?borrar=<?php echo $producto['id'] ?>" class="btn btn-danger">Eliminar</a></td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>

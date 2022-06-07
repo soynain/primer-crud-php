@@ -14,13 +14,13 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Crud Productos</a>
+            <a class="navbar-brand text-white" >Crud Productos</a>
 
         </div>
     </nav>
 
     <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-        <form onsubmit="return validate(event)" method="post" class="login-cont" action="/crudmaestros/login.php">
+        <form onsubmit="return validate(event)" method="post" class="login-cont" action="/crudmaestros/auth/login.php">
             <label for="usuarioInput" class="form-label">Nombre de usuario: </label>
             <input name="us_vbl" type="text" class="form-control mb-3" id="usuarioInput"
                 placeholder="Ingresa aquí tu usuario">
@@ -47,7 +47,7 @@
                 dangerNode.appendChild(document.createTextNode('No puede dejar los campos vacios'))
                 return false;
             } else {
-             /*   fetch('/crudmaestros/login.php', {
+             /*   fetch('/crudmaestros/auth/login.php', {
                     method: 'POST', // or 'PUT'
                     body: formData, // data can be `string` or {object}!
                 }).then(res => console.log(res))

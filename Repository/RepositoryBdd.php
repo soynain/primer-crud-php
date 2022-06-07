@@ -41,6 +41,34 @@ class RepositoryBdd
         }
     }
 
+    public function ejecutarEliminacionRegistro($idProducto){
+        $borradoEjecutor=$this->conexion->prepare("delete from alta_producto where id=?");
+        $borradoEjecutor->bindParam(1,$idProducto);
+        try {
+            $borradoEjecutor->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function ejecutarModificacionRegistro($idProducto,$nombre,$descripcion,$fecha,$imagen){
+        $borradoEjecutor=$this->conexion->prepare("update alta_producto set nombre=?,descripcion=?,fechaAlta=?,imagen=? where id=?");
+        $borradoEjecutor->bindParam(1,$nombre);
+        $borradoEjecutor->bindParam(2,$descripcion);
+        $borradoEjecutor->bindParam(3,$fecha);
+        $borradoEjecutor->bindParam(4,$imagen);
+        $borradoEjecutor->bindParam(5,$idProducto);
+        try {
+            $borradoEjecutor->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
     public function getConexion()
     {
         return $this->conexion;
